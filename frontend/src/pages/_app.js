@@ -1,5 +1,6 @@
 // ===========================================
 // _APP.JS - COMPLETO E OTIMIZADO COM USERCONTEXT CORRIGIDO
+// Cursor corrigido: push issues resolvidos
 // ===========================================
 // Mantém estado de usuário, sincroniza entre abas,
 // registra Service Worker, e carrega lojas associadas
