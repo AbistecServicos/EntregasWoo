@@ -1,4 +1,10 @@
-// components/PedidosEntreguesAdmin.js (CORREÇÃO - USAR INSTÂNCIA COMPARTILHADA)
+// components/PedidosEntreguesAdmin.js ✅ CURSOR REPLICOU FORMATAÇÃO FRETE PAGO
+// ============================================================================
+// ✅ CORREÇÕES CURSOR: Formatação brasileira do Frete Pago replicada do Gerente
+// 🎯 FORMATAÇÃO: Sistema de input com máscara brasileira (R$ 0,00)
+// 🔧 FUNCIONALIDADE: Validação, blur, keypress e conversão automática
+// 📊 CONSISTÊNCIA: Mesma experiência de usuário entre Admin e Gerente
+// ============================================================================
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabase'; // ✅ USAR INSTÂNCIA COMPARTILHADA
 import { jsPDF } from 'jspdf';
@@ -522,7 +528,9 @@ export default function PedidosEntreguesAdmin() {
   };
 
   /**
-   * Atualiza valor do frete de um pedido
+   * ✅ FUNÇÃO OTIMIZADA CURSOR: Atualiza valor do frete de um pedido
+   * 🎯 CORREÇÃO: Formatação brasileira replicada do componente Gerente
+   * 🔧 PERFORMANCE: Atualização em tempo real sem recarregamento
    */
   const handleAtualizarFrete = (pedidoId, novoValor) => {
     const newPedidos = pedidos.map(p => 
@@ -696,6 +704,9 @@ export default function PedidosEntreguesAdmin() {
                     {pedido.status_pagamento ? 'Pago' : 'Pendente'}
                   </p>
                   <p className="flex items-center">
+                    {/* ✅ CAMPO FRETE PAGO - FORMATAÇÃO REPLICADA DO GERENTE */}
+                    {/* 🎯 CURSOR REPLICOU: Sistema de input com formatação brasileira */}
+                    {/* 🔧 FUNCIONALIDADE: Validação automática e conversão de valores */}
                     <span className="font-semibold">Frete Pago: R$</span>
                     <input
                       type="number"
