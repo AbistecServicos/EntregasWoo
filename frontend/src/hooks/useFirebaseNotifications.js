@@ -57,7 +57,8 @@ export const useFirebaseNotifications = (userId) => {
   // ============================================================================
   // 2. REGISTRAR SERVICE WORKER (ORIGINAL, MEMOIZADO - DESATIVADO)
   // ============================================================================
-  const registerServiceWorker = useCallback(async () => {
+  // ❌ DESABILITADO: registerServiceWorker desativado para remover solicitações de permissão
+  /*const registerServiceWorker = useCallback(async () => {
     // DESATIVADO: Comenta registro SW para teste
     if (isDev) console.log('🔇 SW desativado para teste');
     return null;
@@ -86,8 +87,13 @@ export const useFirebaseNotifications = (userId) => {
       console.error('❌ Erro no Service Worker:', error);
       return null;
     }
-    */
-  }, []);
+    */};*/
+
+// ✅ RETURN NULL: Sem Service Worker, sem permissões  
+const registerServiceWorker = useCallback(async () => {
+  console.log('🚫 Service Worker desabilitado para remover solicitações de permissão');
+  return null;
+}, []);
 
   // ============================================================================
   // 3. OBTER TOKEN FCM (ORIGINAL, COM REF - DESATIVADO)

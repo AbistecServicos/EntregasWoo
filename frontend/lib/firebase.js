@@ -39,7 +39,8 @@ export { app, messaging };
 // ============================================================================
 // 1. REGISTRAR SERVICE WORKER (SEPARADO PARA REUSE)
 // ============================================================================
-export const registerFCMServiceWorker = async () => {
+// ❌ DESABILITADO: registerFCMServiceWorker desativado para remover solicitações de permissão
+/*export const registerFCMServiceWorker = async () => {
   if (!('serviceWorker' in navigator)) {
     console.log('❌ SW não suportado');
     return null;
@@ -71,6 +72,11 @@ export const registerFCMServiceWorker = async () => {
     console.error('❌ Erro SW:', error);
     return null;
   }
+};*/
+// ✅ RETURN NULL: Sem Service Worker, sem permissões
+export const registerFCMServiceWorker = async () => {
+  console.log('🚫 Service Worker desabilitado para remover solicitações de permissão');
+  return null;
 };
 
 // ============================================================================
