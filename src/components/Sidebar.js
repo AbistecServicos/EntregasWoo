@@ -1,5 +1,9 @@
 // ========================================
-// SIDEBAR.JS - COMPONENTE OTIMIZADO
+// SIDEBAR.JS - COMPONENTE OTIMIZADO ✅ CURSOR GH
+// ========================================
+// ✅ CORREÇÃO CRUCIAL: Usuários logados agora SEMPRE veem páginas públicas no sidebar
+// ❌ PROBLEMA ANTIGO: Usuário logado só via itens específicos da role
+// ✅ PROBLEMA NOVO: Usuário logado vê páginas públicas + itens da role (mais completo)
 // ========================================
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import Link from 'next/link';
@@ -159,7 +163,8 @@ const Sidebar = ({
       return publicItems;
     }
 
-    // Usuário logado sem lojas
+    // Usuário logado sem lojas - CORRIGIDO PARA MOSTRAR PÁGINAS PÚBLICAS ✅ CURSOR GH
+    // ✅ PROBLEMA CORRIGIDO: Usuário logado agora sempre vê páginas públicas + perfil
     if (displayUserLojas.length === 0 && displayUserRole === 'visitante') {
       return [...publicItems, { path: '/perfil', icon: '👤', label: 'Meu Perfil' }];
     }
@@ -195,7 +200,8 @@ const Sidebar = ({
       userItems.push({ path: '/admin', icon: '⚙️', label: 'Administração' });
     }
 
-    return userItems;
+    // ✅ CURSOR CORRIGIU: Usuários logados agora SEMPRE veem páginas públicas + itens personalizados
+    return [...publicItems, ...userItems];
   }, [displayUser, displayUserRole, displayUserLojas.length]);
 
   // ===== 5. HANDLERS OTIMIZADOS COM USECALLBACK =====
