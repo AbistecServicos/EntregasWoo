@@ -1,5 +1,5 @@
 // ===========================================
-// USERCONTEXT.JS - CORRIGIDO PARA SCHEMA SUPABASE
+// USERCONTEXT.JS - CORRIGIDO PARA SCHEMA SUPABASE ✅ CURSOR GH
 // ===========================================
 // Gerencia estado global do usuário com Supabase Auth,
 // paraleliza queries para performance, e suporta sync entre abas
