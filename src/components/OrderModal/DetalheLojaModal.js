@@ -1,4 +1,4 @@
-// src/components/OrderModal/DetalheLojaModal.js
+// src/components/OrderModal/DetalheLojaModal.js resolvido
 import { useState, useEffect } from 'react';
 import { supabase } from '../../../lib/supabase'; // Caminho corrigido
 
