@@ -1,34 +1,16 @@
 // next.config.js
 const path = require('path');
 
-// ✅ REMOVA o withPWA e use configuração simples
 module.exports = {
   // ==========================================================================
-  // CONFIGURAÇÕES PARA RESOLVER AVISOS DE MÚLTIPLOS LOCKFILES
-  // ==========================================================================
-  outputFileTracingRoot: path.join(__dirname, '../'),
-  
-  // ==========================================================================
-  // CONFIGURAÇÕES DO NEXT.JS
+  // CONFIGURAÇÕES BÁSICAS DO NEXT.JS
   // ==========================================================================
   reactStrictMode: true,
-  
-  // ==========================================================================
-  // CONFIGURAÇÕES PARA MELHORAR PERFORMANCE EM MONOREPO
-  // ==========================================================================
-  transpilePackages: [],
   
   // ==========================================================================
   // CONFIGURAÇÕES DE WEBPACK
   // ==========================================================================
   webpack: (config, { isServer }) => {
-    // ✅ Adicionar suporte para arquivos .js da pasta src/lib
-    config.module.rules.push({
-      test: /\.(js|jsx)$/,
-      include: [path.resolve(__dirname, 'src/lib')],
-      use: 'babel-loader',
-    });
-    
     // ✅ Desativar módulos do Node.js que não são necessários no cliente
     if (!isServer) {
       config.resolve.fallback = {
@@ -53,16 +35,6 @@ module.exports = {
           },
         ],
       },
-      {
-        source: '/lib/:file*',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/javascript',
-          },
-        ],
-      },
-      // ✅ ADICIONE ESTE HEADER PARA O SERVICE WORKER DO FIREBASE
       {
         source: '/firebase-messaging-sw.js',
         headers: [
