@@ -1,7 +1,8 @@
 // ========================================
-// HEADER.JS - COMPONENTE SIMPLIFICADO (SEM FCM)
+// HEADER.JS - COMPONENTE SIMPLIFICADO (SEM FCM) ✅ CURSOR COMMIT
 // ========================================
 // Header limpo sem sistema de notificações para máxima performance
+// ✅ Commit específico para GitHub push
 // ========================================
 
 import React from 'react';
