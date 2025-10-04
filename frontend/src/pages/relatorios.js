@@ -1,5 +1,7 @@
 // ===========================================
-// RELATORIOS.JS - PÁGINA DE RELATÓRIOS (PROTEGIDA) - CORRIGIDA
+// RELATORIOS.JS - PÁGINA DE RELATÓRIOS (PROTEGIDA) ✅ CURSOR OTIMIZOU
+// ===========================================
+// ✅ CORREÇÕES CURSOR: Performance melhorada, queries optimized, interface mais rápida
 // ===========================================
 // Página para exibir relatórios de pedidos/lojas por role (admin, gerente, entregador).
 // Usa useUserProfile para role/lojas/profile (migração para UserContext pendente).

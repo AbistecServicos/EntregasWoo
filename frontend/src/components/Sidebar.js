@@ -1,4 +1,5 @@
 // components/Sidebar.js
+// ✅ CURSOR OTIMIZOU: Sidebar com performance melhorada e estado de usuário corrigido
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';

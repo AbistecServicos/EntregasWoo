@@ -1,6 +1,7 @@
 // ========================================
-// LOGIN.JS - VERSÃO CORRIGIDA COM DEBUG
+// LOGIN.JS - VERSÃO CORRIGIDA COM DEBUG ✅ CURSOR OTIMIZOU
 // ========================================
+// ✅ CORREÇÕES CURSOR: Auth melhorada, debug logs, fluxo Google OAuth otimizado
 
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';

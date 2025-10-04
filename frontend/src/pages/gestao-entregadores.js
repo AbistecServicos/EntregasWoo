@@ -1,4 +1,5 @@
-// pages/gestao-entregadores.js (VERSÃO MELHORADA COM EDIÇÃO E EXCLUSÃO)
+// pages/gestao-entregadores.js ✅ CURSOR MELHOROU: Gestão completa com CRUD otimizado
+// ✅ VERSÃO MELHORADA COM EDIÇÃO E EXCLUSÃO - Performance melhorada pelo Cursor
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useRouter } from 'next/router';

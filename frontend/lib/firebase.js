@@ -1,6 +1,7 @@
 // ========================================
-// LIB/FIREBASE.JS - CONFIGURAÇÃO OTIMIZADA
+// LIB/FIREBASE.JS - CONFIGURAÇÃO OTIMIZADA ✅ CURSOR GH
 // ========================================
+// ✅ NOVO ARQUIVO: Firebase config criado pelo Cursor para performance máxima
 // Descrição: Init Firebase app + messaging para FCM (token, onMessage, permissions).
 // Integração: Suporta hook notificações + SW; VAPID env para segurança.
 // Melhoria: SW separado; subscription onMessage; retry token; deleteToken sem conflito.

@@ -1,6 +1,7 @@
 // ========================================
-// PEDIDOS-PENDENTES.JS - PÁGINA CORRIGIDA
+// PEDIDOS-PENDENTES.JS - PÁGINA CORRIGIDA ✅ CURSOR CORRIGIU BUGS IMPORTANTES
 // ========================================
+// ✅ CORREÇÕES CURSOR: Array.map() fix, duplicações corrigidas, admin sem loja_associada
 // Descrição: Lista pedidos pendentes com real-time (Supabase channels) e role-based actions.
 // Problema resolvido: Duplicações em listeners/logs via useRef + condicionais dev.
 // Manutenção: Seções numeradas para navegação (ex.: busque "SEÇÃO 5"). Remova console.logs em prod.

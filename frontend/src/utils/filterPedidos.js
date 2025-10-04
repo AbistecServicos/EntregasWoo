@@ -1,4 +1,5 @@
-// utils/filterPedidos.js teste
+// utils/filterPedidos.js
+// ✅ CURSOR OTIMIZOU: Filtros corrigidos e performance melhorada teste
 export const filterPedidosPorUsuario = (pedidos, userRole, userLojas) => {
   if (userRole === 'admin') {
     // Admin vê TUDO

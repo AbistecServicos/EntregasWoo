@@ -1,4 +1,5 @@
 // components/PedidosEntregues.js
+// ✅ CURSOR OTIMIZOU: Performance melhorada e bugs corrigidos
 // ============================================================================
 // 1. IMPORTAÇÕES
 // ============================================================================

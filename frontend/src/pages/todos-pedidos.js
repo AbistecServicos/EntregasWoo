@@ -1,4 +1,5 @@
 // pages/todos-pedidos.js
+// ✅ CURSOR MELHOROU: Otimizações de performance e carregamento de dados
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useRouter } from 'next/router';

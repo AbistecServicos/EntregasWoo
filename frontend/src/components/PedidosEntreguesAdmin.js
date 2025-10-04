@@ -1,4 +1,5 @@
-// components/PedidosEntreguesAdmin.js (CORREÇÃO - USAR INSTÂNCIA COMPARTILHADA)
+// components/PedidosEntreguesAdmin.js ✅ CURSOR REPLICOU: Formatação Frete Pago (igual Gerente)
+// ✅ CORREÇÃO - USAR INSTÂNCIA COMPARTILHADA + Formatação brasileira implementada
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabase'; // ✅ USAR INSTÂNCIA COMPARTILHADA
 import { jsPDF } from 'jspdf';

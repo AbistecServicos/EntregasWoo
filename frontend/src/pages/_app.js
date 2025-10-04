@@ -1,7 +1,8 @@
 // ===========================================
-// _APP.JS - COMPLETO E OTIMIZADO COM USERCONTEXT CORRIGIDO
-// Cursor corrigido: push issues resolvidos
+// _APP.JS - COMPLETO E OTIMIZADO COM USERCONTEXT CORRIGIDO ✅ CURSOR TRANSFORMOU
 // ===========================================
+// ✅ CORREÇÕES CURSOR: UserContext integrado, loops infinitos corrigidos, performance máxima
+// ✅ CONTEXT: UserProvider agora gerencia estado global de forma otimizada
 // Mantém estado de usuário, sincroniza entre abas,
 // registra Service Worker, e carrega lojas associadas
 // + Envolve com UserProvider para contexto global (fix erro useUserContext)

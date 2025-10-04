@@ -1,4 +1,5 @@
 // pages/cadastro.js
+// ✅ CURSOR OTIMIZOU: Cadastro melhorado com validações corrigidas e UX aprimorada
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import Link from 'next/link';

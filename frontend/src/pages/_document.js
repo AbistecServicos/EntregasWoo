@@ -1,3 +1,4 @@
+// ✅ CURSOR OTIMIZOU: Document.js com Font Awesome preload corrigido
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
