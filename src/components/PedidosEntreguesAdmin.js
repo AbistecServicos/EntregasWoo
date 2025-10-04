@@ -1,4 +1,4 @@
-// components/PedidosEntreguesAdmin.js ✅ CURSOR REPLICOU FORMATAÇÃO FRETE PAGO
+// components/PedidosEntreguesAdmin.js ✅ CURSOR REPLICOU FORMATAÇÃO FRETE PAGO - VERSÃO LOCAL FORÇADA
 // ============================================================================
 // ✅ CORREÇÕES CURSOR: Formatação brasileira do Frete Pago replicada do Gerente
 // 🎯 FORMATAÇÃO: Sistema de input com máscara brasileira (R$ 0,00)
