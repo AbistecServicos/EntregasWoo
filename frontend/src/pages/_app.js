@@ -1,5 +1,5 @@
 // ===========================================
-// _APP.JS - COMPLETO E OTIMIZADO COM USERCONTEXT
+// _APP.JS - COMPLETO E OTIMIZADO COM USERCONTEXT CORRIGIDO
 // ===========================================
 // Mantém estado de usuário, sincroniza entre abas,
 // registra Service Worker, e carrega lojas associadas
