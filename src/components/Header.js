@@ -1,6 +1,9 @@
 // ========================================
-// HEADER.JS - COMPONENTE CORRIGIDO
+// HEADER.JS - COMPONENTE ANTIGO COM SININHO (DESABILITADO) ✅ CURSOR REPLACE
 // ========================================
+// ❌ ARQUIVO DESATIVADO: Este é o Header antigo com sininho Firebase FCM
+// ✅ USA AGORA: frontend/src/components/Header.js (versão simplificada)
+// 🚨 PROBLEMA: App está carregando este arquivo antigo em vez do novo!
 // Descrição: Header com sidebar toggle + sino de notificações FCM (badge + som).
 // Correção: Usa forceRefreshToken para evitar erros de duplicata no clique do sininho.
 // ========================================

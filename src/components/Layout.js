@@ -8,7 +8,8 @@
 // ========================================
 
 import { useState, useEffect, useMemo } from 'react';
-import Header from './Header';
+// ✅ CURSOR CORRIGE: Import do Header simplificado (sem sininho)
+import Header from '../../frontend/src/components/Header.js';
 import Sidebar from './Sidebar';
 import { useUserProfile } from '../hooks/useUserProfile';
 import { useFirebaseNotifications } from '../hooks/useFirebaseNotifications';
