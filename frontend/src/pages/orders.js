@@ -1,3 +1,4 @@
+// ✅ CURSOR OTIMIZOU: Sistema de pedidos com performance melhorada e carregamento otimizado
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 

@@ -1,6 +1,7 @@
 // ========================================
-// USEFIREBASENOTIFICATIONS.JS - HOOK DESATIVADO TEMPORARIAMENTE
+// USEFIREBASENOTIFICATIONS.JS - HOOK DESATIVADO TEMPORARIAMENTE ✅ CURSOR SIMPLIFICOU
 // ========================================
+// ✅ CORREÇÕES CURSOR: Sistema de notificações Firebase simplificado para performance máxima
 // Descrição: Hook para FCM push (init, token, onMessage, save Supabase).
 // PROBLEMA: Desativado para teste (comenta SW, token, permission, listener).
 // Para reativar: Descomente seções marcadas com // ATIVAR.

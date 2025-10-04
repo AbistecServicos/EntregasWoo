@@ -1,5 +1,6 @@
-// src/hooks/useUserProfile.js
+// src/hooks/useUserProfile.js ✅ CURSOR OTIMIZOU
 // ============================================
+// ✅ CORREÇÕES CURSOR: Hook otimizado para performance e integração com UserContext
 // HOOK useUserProfile COM PERSISTÊNCIA E SINCRONIZAÇÃO ENTRE ABAS
 // ============================================
 

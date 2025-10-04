@@ -1,6 +1,7 @@
 // ========================================
-// LOGGER.JS - SISTEMA DE LOG OTIMIZADO
+// LOGGER.JS - SISTEMA DE LOG OTIMIZADO ✅ CURSOR GH
 // ========================================
+// ✅ CORREÇÕES CURSOR: Sistema de logs otimizado com throttling inteligente para evitar spam
 // Controle centralizado de logs para desenvolvimento/produção
 // Remove logs em produção para melhor performance
 // ========================================

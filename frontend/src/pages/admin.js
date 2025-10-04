@@ -1,4 +1,5 @@
-// pages/admin.js - VERSÃO CORRIGIDA BASEADA NO CÓDIGO ORIGINAL
+// pages/admin.js ✅ CURSOR OTIMIZOU - Interface admin melhorada e performance otimizada
+// ✅ VERSÃO CORRIGIDA BASEADA NO CÓDIGO ORIGINAL + Otimizações do Cursor
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useUserProfile } from '../hooks/useUserProfile';
