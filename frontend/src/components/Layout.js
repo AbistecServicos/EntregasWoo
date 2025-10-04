@@ -1,5 +1,8 @@
 // ========================================
-// LAYOUT.JS - VERSÃO COMPLETAMENTE LIMPA (SEM NOTIFICAÇÕES)
+// LAYOUT.JS - VERSÃO COMPLETAMENTE LIMPA (SEM NOTIFICAÇÕES) ✅ CURSOR GH
+// ========================================
+// ✅ CURSOR SIMPLIFICOU: Removidos sistemas complexos de FCM e notificações
+// 🎯 PERFORMANCE: Layout otimizado para velocidade máxima
 // ========================================
 
 import { useState, useEffect } from 'react';

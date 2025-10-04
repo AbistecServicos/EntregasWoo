@@ -1,4 +1,5 @@
 // pages/perfil.js
+// ✅ CURSOR TRANSFORMOU: Loops infinitos corrigidos - useEffect com execução única
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../../lib/supabase';

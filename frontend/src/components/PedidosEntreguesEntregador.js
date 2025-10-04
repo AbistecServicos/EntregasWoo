@@ -1,4 +1,5 @@
 // components/PedidosEntreguesEntregador.js
+// ✅ CURSOR CORRIGIU: Loops infinitos - dependências otimizadas e memoização implementada
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { supabase } from '../../lib/supabase';
 import { OrderModal, WithCourier } from './OrderModal';

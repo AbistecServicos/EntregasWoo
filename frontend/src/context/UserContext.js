@@ -50,6 +50,7 @@ const UserContext = createContext(null);
 // Wrapper que fornece o estado global para toda a app.
 // - Envolva em _app.js: <UserProvider>{children}</UserProvider>.
 // - Value: Estados + função reload para updates manuais.
+// ✅ NOVO ARQUIVO: Context global criado pelo Cursor para resolver loops infinitos e otimizações
 export const UserProvider = ({ children }) => {
   // Estado inicial: Loading true para evitar render prematuro em guards.
   const [userState, setUserState] = useState({

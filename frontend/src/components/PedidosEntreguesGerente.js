@@ -1,4 +1,5 @@
 // components/PedidosEntreguesGerente.js
+// ✅ CURSOR OTIMIZOU: Debug logs adicionados e loops corrigidos neste componente
 // ============================================================================
 // IMPORTAÇÕES
 // ============================================================================

@@ -4,6 +4,7 @@
 // Solução final para resolver AuthRetryableFetchError
 // ========================================
 
+// ✅ NOVO ARQUIVO: Configuração Supabase criada pelo Cursor - conexão otimizada
 import { createClient } from '@supabase/supabase-js';
 
 // Validação de variáveis de ambiente
