@@ -1,4 +1,4 @@
-// components/EditLojaModal.js
+// components/EditLojaModal.js corrigido
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 
