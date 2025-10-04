@@ -1,0 +1,546 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==============================================================================
+   CORREÇÕES CROSS-BROWSER - ELIMINA ERROS NO FIREFOX
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   BLOCO 1: CORREÇÕES DE COMPATIBILIDADE (VERSÃO CORRIGIDA)
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🔧 CORREÇÃO: text-size-adjust cross-browser
+ */
+html {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/**
+ * 🔧 CORREÇÃO: font-smoothing cross-browser
+ */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+}
+
+/**
+ * 🔧 CORREÇÃO: Remove aparência nativa APENAS de elementos específicos
+ * NÃO aplica a inputs do tipo checkbox/radio para mantê-los visíveis
+ */
+button, select, textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+  font: inherit;
+}
+
+/**
+ * 🎯 CORREÇÃO CRÍTICA: Preserva checkboxes e radios
+ * NÃO remove background e border de checkboxes
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  /* MANTÉM a aparência nativa dos checkboxes */
+  -webkit-appearance: auto !important;
+  -moz-appearance: auto !important;
+  appearance: auto !important;
+  background: auto !important;
+  border: auto !important;
+}
+
+/**
+ * 🔧 CORREÇÃO: -moz-focus-inner (apenas para botões)
+ */
+button::-moz-focus-inner,
+select::-moz-focus-inner,
+textarea::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------------------
+   BLOCO 2: ACESSIBILIDADE MODERNA (SUBSTITUI -moz-focus-inner)
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🎯 SUBSTITUIÇÃO: Sistema de foco moderno e acessível
+ * Substitui o -moz-focus-inner por solução cross-browser
+ * :focus-visible só mostra outline quando navegando com teclado
+ */
+*:focus-visible {
+  outline: 2px solid #8b5cf6;    /* Cor roxa do seu tema */
+  outline-offset: 2px;           /* Espaçamento da borda */
+  border-radius: 0.25rem;        /* Cantos arredondados */
+}
+
+/**
+ * 🎯 Foco específico para botões de notificação
+ * Estilo consistente para elementos interativos
+ */
+.notification-button:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+
+/* ==============================================================================
+   VARIÁVEIS DE CORES E ESTILOS GLOBAIS
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   BLOCO 3: SISTEMA DE CORES DO TEMA
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🎨 PALETA DE CORES: Definição centralizada
+ * Todas as cores do sistema em um só lugar
+ * Fácil manutenção e consistência visual
+ */
+:root {
+  /* Cores principais do tema Woo */
+  --woo-purple: #7f54b3;
+  --woo-purple-dark: #6b3fa0;
+  --woo-purple-light: #f0e6ff;
+  
+  /* Cores para sistema de notificações */
+  --notification-red: #ef4444;    /* Erro/Crítico */
+  --notification-green: #10b981;  /* Sucesso */
+  --notification-blue: #3b82f6;   /* Informação */
+  --notification-yellow: #f59e0b; /* Aviso */
+}
+
+/* ==============================================================================
+   ESTILOS GERAIS DO BODY
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   BLOCO 4: CONFIGURAÇÕES GLOBAIS DO BODY
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 📝 CONFIGURAÇÃO: Estilos base do documento
+ * Define fonte, reset de margin/padding
+ * Garante consistência visual inicial
+ */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  margin: 0;      /* Remove margin padrão */
+  padding: 0;     /* Remove padding padrão */
+}
+
+/* ==============================================================================
+   CABEÇALHO FIXO
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   BLOCO 5: CABEÇALHO STICKY
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 📌 CABEÇALHO FIXO: Permanece visível ao rolar
+ * Usado para navegação principal e notificações
+ */
+.sticky-header {
+  position: sticky;   /* Fixo durante scroll */
+  top: 0;            /* Cola no topo */
+  z-index: 50;       /* Acima do conteúdo */
+  background: white; /* Fundo sólido */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-bottom: 2px solid #e9d5ff; /* Destaque roxo */
+}
+
+/* ==============================================================================
+   SISTEMA DE NOTIFICAÇÕES PUSH
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   BLOCO 6: ANIMAÇÕES PARA NOTIFICAÇÕES
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🎭 ANIMAÇÃO: Aparecimento suave do toast
+ * Entrada animada para chamar atenção
+ */
+@keyframes notification-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/**
+ * 🎭 ANIMAÇÃO: Pulsação para badge
+ * Destaque contínuo para notificações não lidas
+ */
+@keyframes notification-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+/**
+ * 🎭 ANIMAÇÃO: Agitação para urgência
+ * Para notificações críticas que exigem atenção imediata
+ */
+@keyframes notification-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ------------------------------------------------------------------------------
+   BLOCO 7: CLASSES DE ANIMAÇÃO APLICÁVEIS
+   ------------------------------------------------------------------------------ */
+
+/**
+ * ⚡ CLASSES UTILITÁRIAS: Aplicam as animações
+ * Use essas classes nos componentes React
+ */
+.animate-notification-fade-in {
+  animation: notification-fade-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-notification-pulse {
+  animation: notification-pulse 2s infinite;
+}
+
+.animate-notification-shake {
+  animation: notification-shake 0.5s ease-in-out;
+}
+
+/* ------------------------------------------------------------------------------
+   BLOCO 8: TOAST DE NOTIFICAÇÃO
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🔔 TOAST: Notificação temporária no canto da tela
+ * Aparece por alguns segundos e some automaticamente
+ */
+.notification-toast {
+  position: fixed;      /* Fixo na tela */
+  top: 1rem;           /* Distância do topo */
+  right: 1rem;         /* Alinhado à direita */
+  z-index: 100;        /* Acima de tudo */
+  max-width: 24rem;    /* Largura máxima */
+  width: 90%;          /* Largura responsiva */
+  background: white;   /* Fundo branco */
+  border-radius: 0.75rem; /* Cantos arredondados */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb; /* Borda sutil */
+  overflow: hidden;    /* Esconde conteúdo extra */
+}
+
+/**
+ * 🖱️ INTERATIVIDADE: Efeitos hover no toast
+ * Feedback visual ao passar o mouse
+ */
+.notification-toast:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px); /* Levanta sutilmente */
+  transition: all 0.2s ease-in-out; /* Transição suave */
+}
+
+/* ------------------------------------------------------------------------------
+   BLOCO 9: BADGE DE NOTIFICAÇÕES
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🔴 BADGE: Contador de notificações não lidas
+ * Aparece sobre o ícone no header
+ */
+.notification-badge {
+  position: absolute;    /* Posicionamento absoluto */
+  top: -0.25rem;        /* Acima do ícone */
+  right: -0.25rem;      /* À direita do ícone */
+  background-color: var(--notification-red); /* Vermelho padrão */
+  color: white;         /* Texto branco */
+  border-radius: 9999px; /* Círculo perfeito */
+  min-width: 1.25rem;   /* Largura mínima */
+  height: 1.25rem;      /* Altura fixa */
+  display: flex;        /* Flex para centralizar */
+  align-items: center;  /* Centraliza vertical */
+  justify-content: center; /* Centraliza horizontal */
+  font-size: 0.75rem;   /* Texto pequeno */
+  font-weight: 600;     /* Texto em negrito */
+  line-height: 1;       /* Altura de linha */
+  border: 2px solid white; /* Borda branca para contraste */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/**
+ * 🟡 BADGE ESTADO: Muitas notificações
+ * Muda para amarelo e anima diferente
+ */
+.notification-badge--many {
+  background-color: var(--notification-yellow); /* Amarelo alerta */
+  animation: notification-pulse 1s infinite, notification-shake 0.5s ease-in-out;
+}
+
+/**
+ * 🔴 BADGE ESTADO: Crítico/Urgente
+ * Vermelho com pulsação rápida
+ */
+.notification-badge--critical {
+  background-color: var(--notification-red); /* Vermelho urgente */
+  animation: notification-pulse 0.5s infinite; /* Pulsação rápida */
+}
+
+/* ------------------------------------------------------------------------------
+   BLOCO 10: BOTÃO DE NOTIFICAÇÕES
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🔘 BOTÃO: Ícone de notificações no header
+ * Ponto central para acessar notificações
+ */
+.notification-button {
+  position: relative;   /* Para posicionar o badge */
+  padding: 0.5rem;     /* Espaçamento interno */
+  border-radius: 0.375rem; /* Cantos arredondados */
+  color: #6b7280;      /* Cor cinza padrão */
+  transition: all 0.2s ease-in-out; /* Transições suaves */
+}
+
+/**
+ * 🖱️ BOTÃO INTERAÇÃO: Estados hover e focus
+ * Feedback visual para interação
+ */
+.notification-button:hover {
+  color: #374151;          /* Cor mais escura */
+  background-color: #f9fafb; /* Fundo sutil */
+  transform: translateY(-1px); /* Efeito de levantar */
+}
+
+/**
+ * 🔘 BOTÃO COM NOTIFICAÇÕES: Destaque quando há notificações
+ * Muda cor para roxo quando há notificações não lidas
+ */
+.notification-button--has-notifications {
+  color: var(--woo-purple); /* Cor roxa do tema */
+}
+
+/* ------------------------------------------------------------------------------
+   BLOCO 11: LISTA DE NOTIFICAÇÕES (PARA IMPLEMENTAÇÃO FUTURA)
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 📋 LISTA: Dropdown/modal com histórico de notificações
+ * Para quando implementar lista completa
+ */
+.notification-list {
+  position: absolute;   /* Posicionamento absoluto */
+  top: 100%;           /* Abaixo do botão */
+  right: 0;            /* Alinhado à direita */
+  margin-top: 0.5rem;  /* Espaço do botão */
+  width: 20rem;        /* Largura fixa */
+  max-height: 24rem;   /* Altura máxima com scroll */
+  overflow-y: auto;    /* Scroll vertical */
+  background: white;   /* Fundo branco */
+  border-radius: 0.75rem; /* Cantos arredondados */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb; /* Borda sutil */
+  z-index: 50;         /* Acima do conteúdo */
+}
+
+/**
+ * 📄 ITEM: Notificação individual na lista
+ * Cada notificação como item clicável
+ */
+.notification-item {
+  padding: 1rem;           /* Espaçamento interno */
+  border-bottom: 1px solid #f3f4f6; /* Separador sutil */
+  transition: background-color 0.2s ease-in-out; /* Transição suave */
+}
+
+.notification-item:hover {
+  background-color: #f9fafb; /* Fundo ao passar mouse */
+}
+
+.notification-item:last-child {
+  border-bottom: none;     /* Remove borda do último */
+}
+
+/**
+ * 📄 ITEM NÃO LIDO: Destaque para notificações novas
+ * Background colorido e borda destacada
+ */
+.notification-item--unread {
+  background-color: var(--woo-purple-light); /* Fundo roxo claro */
+  border-left: 4px solid var(--woo-purple);   /* Borda roxa esquerda */
+}
+
+/* ------------------------------------------------------------------------------
+   BLOCO 12: ESTADOS DO SISTEMA
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🟢 CONECTADO: Sistema operando normalmente
+ */
+.notification-status--connected {
+  color: var(--notification-green); /* Verde sucesso */
+}
+
+/**
+ * 🔴 DESCONECTADO: Problemas de conexão
+ */
+.notification-status--disconnected {
+  color: var(--notification-red); /* Vermelho erro */
+}
+
+/**
+ * 🟡 CARREGANDO: Processamento em andamento
+ */
+.notification-status--loading {
+  color: var(--notification-yellow); /* Amarelo alerta */
+}
+
+/* ==============================================================================
+   RESPONSIVIDADE
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   BLOCO 13: AJUSTES PARA DISPOSITIVOS MÓVEIS
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 📱 MOBILE: Ajustes para telas menores que 768px
+ * Otimiza experiência em smartphones
+ */
+@media (max-width: 768px) {
+  /* Toast ocupa largura total com margens */
+  .notification-toast {
+    right: 0.5rem;
+    left: 0.5rem;
+    max-width: none;
+    width: auto;
+  }
+  
+  /* Lista em tela cheia no mobile */
+  .notification-list {
+    width: 100vw;       /* Largura total da viewport */
+    right: -1rem;       /* Compensa padding */
+    border-radius: 0;   /* Remove bordas para tela cheia */
+  }
+  
+  /* Badge menor em mobile */
+  .notification-badge {
+    min-width: 1.125rem;
+    height: 1.125rem;
+    font-size: 0.625rem;
+  }
+}
+
+/* ==============================================================================
+   COMPONENTES TAILWIND PERSONALIZADOS
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   BLOCO 14: COMPONENTES PERSONALIZADOS COM @layer
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🎨 COMPONENTES: Classes reutilizáveis com Tailwind
+ * Use @layer para organização e performance
+ */
+@layer components {
+  /* Botão estilizado com tema WooCommerce */
+  .btn-notification {
+    @apply bg-[var(--woo-purple)] text-white px-4 py-2 rounded-lg hover:bg-[var(--woo-purple-dark)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--woo-purple)] focus:ring-offset-2;
+  }
+  
+  /* Badge genérico para status */
+  .badge-notification {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  /* Variações de cor para o badge */
+  .badge-notification--success {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .badge-notification--warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .badge-notification--error {
+    @apply bg-red-100 text-red-800;
+  }
+}
+
+/* ==============================================================================
+   UTILITÁRIOS E ESTADOS ESPECIAIS
+   ============================================================================== */
+
+/* ------------------------------------------------------------------------------
+   BLOCO 15: UTILITÁRIOS DO SISTEMA DE NOTIFICAÇÕES
+   ------------------------------------------------------------------------------ */
+
+/**
+ * 🎯 ESCONDER: Animação para remover notificações
+ * Saída suave quando notificação é fechada
+ */
+.notification-hide {
+  opacity: 0;                   /* Transparente */
+  transform: translateX(100%);  /* Sai pela direita */
+  transition: all 0.3s ease-in-out; /* Transição suave */
+}
+
+/**
+ * 🚨 PRIORIDADE: Destaque máximo para notificações importantes
+ * Gradiente e borda vermelha para urgências
+ */
+.notification-priority {
+  border-left: 4px solid var(--notification-red); /* Borda vermelha */
+  background: linear-gradient(90deg, #fef2f2 0%, white 100%); /* Gradiente sutil */
+}
+
+/**
+ * ⏳ SKELETON: Loading para notificações carregando
+ * Efeito shimmer durante carregamento
+ */
+.notification-skeleton {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ------------------------------------------------------------------------------
+   BLOCO 16: ACESSIBILIDADE AVANÇADA
+   ------------------------------------------------------------------------------ */
+
+/**
+ * ♿ ACESSIBILIDADE: Anúncio para leitores de tela
+ * Comunica novas notificações para usuários com deficiência visual
+ */
+.notification-announce {
+  position: absolute;    /* Posicionamento fora da tela */
+  left: -10000px;       /* Fora do viewport */
+  top: auto;            /* Posição automática */
+  width: 1px;           /* Largura mínima */
+  height: 1px;          /* Altura mínima */
+  overflow: hidden;     /* Esconde conteúdo */
+}
