@@ -12,7 +12,8 @@ import { useState, useEffect, useMemo } from 'react';
 import Header from '../../frontend/src/components/Header.js';
 import Sidebar from './Sidebar';
 import { useUserProfile } from '../hooks/useUserProfile';
-import { useFirebaseNotifications } from '../hooks/useFirebaseNotifications';
+// ❌ DESABILITADO: useFirebaseNotifications para remover solicitações de permissão
+// import { useFirebaseNotifications } from '../hooks/useFirebaseNotifications';
 
 const Layout = ({ 
   children, 
@@ -41,12 +42,17 @@ const Layout = ({
   // Memo para uid estável (evita re-init hook em re-renders).
   const uid = useMemo(() => userProfile?.uid || null, [userProfile?.uid]);
   
-  // Hook FCM com uid memoizado.
-  const { 
-    token = null, 
-    notification = null, 
-    isSupported = false 
-  } = useFirebaseNotifications(uid);
+  // ❌ DESABILITADO: Hook FCM desativado para remover solicitações de permissão
+  // const { 
+  //   token = null, 
+  //   notification = null, 
+  //   isSupported = false 
+  // } = useFirebaseNotifications(uid);
+  
+  // ✅ VALORES FALSOS: Sem Firebase, sem notificações
+  const token = null;
+  const notification = null; 
+  const isSupported = false;
 
   // ============================================================================
   // 3. EFFECT: DETECTAR TAMANHO DA TELA (ORIGINAL)
