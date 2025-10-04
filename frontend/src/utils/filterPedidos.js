@@ -1,4 +1,4 @@
-// utils/filterPedidos.js
+// utils/filterPedidos.js teste
 export const filterPedidosPorUsuario = (pedidos, userRole, userLojas) => {
   if (userRole === 'admin') {
     // Admin vê TUDO
