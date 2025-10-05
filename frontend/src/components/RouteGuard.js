@@ -26,14 +26,14 @@
 // - Loading infinito: Espera contexto (loading false só após loadUserData).
 // - Sync abas: Herda do contexto (_app.js + localStorage).
 
-import { useUserContext } from '../context/UserContext';  // MIGRE AQUI: Global state
-// import { useUserProfile } from '../hooks/useUserProfile';  // OU use isso se não migrado
+// import { useUserContext } from '../context/UserContext';  // MIGRE AQUI: Global state
+import { useUserProfile } from '../hooks/useUserProfile';  // OU use isso se não migrado
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';  // Para side-effects (redirect)
 
 const RouteGuard = ({ children, requiredRole }) => {
-  const { userRole, loading } = useUserContext();  // Do contexto (loading global)
-  // const { userRole, loading } = useUserProfile();  // OU isso se não migrado
+  // const { userRole, loading } = useUserContext();  // Do contexto (loading global)
+  const { userRole, loading } = useUserProfile();  // OU isso se não migrado
   const router = useRouter();
 
   // Role levels: Hierarquia para checks (admin pode tudo, etc.)
@@ -46,6 +46,16 @@ const RouteGuard = ({ children, requiredRole }) => {
 
   const userLevel = roleLevels[userRole] || 0;
   const requiredLevel = roleLevels[requiredRole] || 0;
+
+  // ✅ DEBUG: Log detalhado para admin
+  console.log('🔍 ROUTEGUARD DEBUG:', {
+    userRole,
+    requiredRole,
+    userLevel,
+    requiredLevel,
+    hasAccess: userLevel >= requiredLevel,
+    loading
+  });
 
   // Loading: Spinner global (espera contexto resolver)
   if (loading) {
@@ -60,9 +70,9 @@ const RouteGuard = ({ children, requiredRole }) => {
   // Unauthorized: Redirect para página de erro (ex.: /nao-autorizado)
   if (userLevel < requiredLevel) {
     useEffect(() => {
-      console.warn(`Acesso negado: Role ${userRole} insuficiente para ${requiredRole}`);
-      router.push('/nao-autorizado');  // Crie essa página se não existir
-    }, [router, userRole, requiredRole]);
+      console.warn(`❌ ACESSO NEGADO: Role '${userRole}' (level ${userLevel}) insuficiente para '${requiredRole}' (level ${requiredLevel})`);
+      router.push('/nao-autorizado');
+    }, [router, userRole, requiredRole, userLevel, requiredLevel]);
 
     return null;  // Não renderiza children durante redirect
   }

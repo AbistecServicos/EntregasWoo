@@ -7,6 +7,12 @@ import { useEffect } from 'react';
 export default function HomePage() {
   // Hook useEffect para configurar a navegação suave
   useEffect(() => {
+    // ✅ CORREÇÃO: Limpar parâmetros de erro da URL se existirem
+    if (typeof window !== 'undefined' && window.location.search.includes('error=')) {
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }
+
     // Seleção de todos os links internos que começam com '#'
     const anchors = document.querySelectorAll('a[href^="#"]');
 

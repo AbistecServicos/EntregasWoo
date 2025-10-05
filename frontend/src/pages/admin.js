@@ -293,6 +293,14 @@ export default function Admin() {
   // ============================================================================
   // 7. VERIFICAÇÕES DE ACESSO
   // ============================================================================
+  
+  // ✅ DEBUG: Log detalhado para admin
+  console.log('🔍 ADMIN PAGE DEBUG:', {
+    userRole,
+    userLoading,
+    timestamp: new Date().toLocaleTimeString()
+  });
+
   if (userLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">

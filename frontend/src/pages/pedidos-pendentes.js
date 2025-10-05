@@ -48,6 +48,15 @@ export default function PedidosPendentes() {
   // ✅ CORREÇÃO: Usar hook otimizado do UserContext
   const { userRole, userProfile, loading: userLoading } = useUserProfile();
 
+  // ✅ NOVO: Verificar e limpar parâmetros de erro da URL
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('error=')) {
+      console.log('🔧 LIMPANDO: Parâmetros de erro da URL detectados');
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }
+  }, []);
+
   // Ref para trackear subscription (evita múltiplos listeners).
   const subscriptionRef = useRef(null);
   const isDev = process.env.NODE_ENV === 'development'; // Flag para logs dev-only;
@@ -258,10 +267,15 @@ export default function PedidosPendentes() {
           status_transporte,
           id_loja,
           nome_cliente,
+          telefone_cliente,
+          email_cliente,
           endereco_entrega,
+          produto,
           total,
           loja_nome,
-          forma_pagamento
+          loja_telefone,
+          forma_pagamento,
+          observacao_pedido
         `, { count: 'exact' })  // COUNT para saber total
         .eq('status_transporte', 'aguardando')
         .in('id_loja', idsLojasUsuario)

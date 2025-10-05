@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../../lib/supabase';
-import { useUserContext } from '../context/UserContext'; // ✅ OTIMIZADO: Direct context access
+import { useUserProfile } from '../hooks/useUserProfile'; // ✅ CORREÇÃO: Usar mesmo hook das outras páginas
 import EditUsuarioModal from '../components/EditUsuarioModal';
 import EditLojaModal from '../components/EditLojaModal';
 
@@ -12,8 +12,6 @@ import EditLojaModal from '../components/EditLojaModal';
 // ==============================================================================
 export default function Perfil() {
   const router = useRouter();
-  // ✅ CORREÇÃO: Usar UserContext otimizado em vez de duplicar
-  // const { userProfile, userRole, userLojas, loading, error } = useUserProfile(); // REMOVIDO
   const [modalUsuarioOpen, setModalUsuarioOpen] = useState(false);
   const [modalLojaOpen, setModalLojaOpen] = useState(false);
   const [lojaSelecionada, setLojaSelecionada] = useState(null);
@@ -30,8 +28,11 @@ export default function Perfil() {
     'L4': '3G Luanda'
   };
 
-  // ✅ CORREÇÃO: Usar UserContext direto para melhor performance e debugging
-  const { userProfile, userRole, userLojas, loading: userLoading } = useUserContext();
+  // ✅ CORREÇÃO: Usar useUserProfile para consistência com outras páginas
+  const { userProfile, userRole, userLojas, loading: userLoading } = useUserProfile();
+  
+  // ✅ NOVO: Estado para controlar se já verificou autenticação inicialmente
+  const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
   // ============================================================================
   // 2. EFFECT SIMPLIFICADO: Redirecionamento quando necessário
@@ -47,7 +48,12 @@ export default function Perfil() {
       page: 'perfil',
       redirecting: isRedirecting,
       tabVisible: document.visibilityState,
-      urlHasCode: typeof window !== 'undefined' ? new URLSearchParams(window.location.search).has('code') : false
+      urlHasCode: typeof window !== 'undefined' ? new URLSearchParams(window.location.search).has('code') : false,
+      userDetails: userProfile ? {
+        uid: userProfile.uid,
+        email: userProfile.email,
+        nome: userProfile.nome_completo
+      } : null
     });
 
     // Se veio do login Google, redirecionar após brief delay
@@ -68,8 +74,24 @@ export default function Perfil() {
     }
     
     // ✅ CORREÇÃO: Redirecionamento mais robusto - aguardar carregamento completo
-    if (!userLoading && !userProfile && !isRedirecting) {
-      console.log('🚪 PERFIL: Nenhum usuário encontrado após carregamento, redirecionando para login');
+    // Aguardar um pouco antes de verificar autenticação para evitar timing issues
+    if (!hasCheckedAuth && !userLoading) {
+      // Dar tempo para o hook carregar completamente
+      setTimeout(() => {
+        setHasCheckedAuth(true);
+      }, 500);
+      return;
+    }
+    
+    // Só redireciona se realmente não há usuário E não está carregando E já verificou auth
+    if (hasCheckedAuth && !userLoading && !userProfile && !isRedirecting) {
+      console.log('🚪 PERFIL: Nenhum usuário encontrado após carregamento completo, redirecionando para login', {
+        userLoading,
+        userProfile: userProfile,
+        isRedirecting,
+        hasCheckedAuth,
+        timestamp: currentTimestamp
+      });
       setIsRedirecting(true);
       // Usar setTimeout para evitar problemas de estado
       setTimeout(() => {
@@ -80,6 +102,18 @@ export default function Perfil() {
         role: userRole, 
         uid: userProfile.uid,
         timestamp: currentTimestamp 
+      });
+      setHasCheckedAuth(true); // Marcar como verificado
+    } else if (!userLoading && userProfile && !userRole) {
+      console.log('⚠️ PERFIL: Usuário encontrado mas sem role definido', {
+        userProfile: userProfile?.uid,
+        userRole,
+        timestamp: currentTimestamp
+      });
+    } else if (userLoading) {
+      console.log('⏳ PERFIL: Ainda carregando dados do usuário', {
+        userLoading,
+        timestamp: currentTimestamp
       });
     }
   }, [userLoading, userProfile, userRole]); // ✅ CORREÇÃO: Remover isRedirecting das dependências para evitar loops
