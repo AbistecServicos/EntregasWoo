@@ -123,9 +123,14 @@ useEffect(() => {
   // ============================================================================
   // MONTAGEM CONDICIONAL DOS ITENS (USA DADOS INSTANTÂNEOS)
   // ============================================================================
-  let menuItems = [homeItem, vendasWooItem];
+  // ✅ CORREÇÃO: Quando logado, não mostrar páginas index e vendaswoo
+  let menuItems = [];
 
-  if (displayUser) {
+  // Se usuário não está logado, mostrar páginas públicas
+  if (!displayUser) {
+    menuItems = [homeItem, vendasWooItem];
+  } else {
+    // Se usuário está logado, mostrar apenas páginas do sistema
     menuItems.push(perfilItem);
 
     // ✅ REORGANIZADO: Pedidos Pendentes disponível para todos os usuários autenticados
@@ -157,7 +162,7 @@ useEffect(() => {
   }
 
   // ============================================================================
-  // FUNÇÃO DE LOGOUT CORRIGIDA (SEM RELOAD FORÇADO)
+  // FUNÇÃO DE LOGOUT CORRIGIDA (REDIRECIONAMENTO GARANTIDO PARA PÁGINA INICIAL)
   // ============================================================================
   const handleLogout = async () => {
     try {
@@ -181,11 +186,28 @@ useEffect(() => {
       
       console.log('✅ Logout realizado com sucesso');
       
-      // ✅ CORREÇÃO: Redirecionamento limpo
-      await router.push('/');
+      // ✅ CORREÇÃO: Redirecionamento garantido para página de login
+      console.log('🔐 Redirecionando para página de login...');
+      
+      // Tentar router primeiro (mais rápido)
+      try {
+        await router.push('/login');
+        console.log('✅ Redirecionamento via router concluído');
+      } catch (routerError) {
+        console.warn('⚠️ Router falhou, usando window.location:', routerError);
+        // Fallback: usar window.location
+        window.location.href = '/login';
+      }
       
     } catch (error) {
       console.error('❌ Erro ao fazer logout:', error);
+      // Mesmo com erro, tentar redirecionar para página de login
+      console.log('🔄 Tentando redirecionamento mesmo com erro...');
+      try {
+        await router.push('/login');
+      } catch {
+        window.location.href = '/login';
+      }
     }
   };
 

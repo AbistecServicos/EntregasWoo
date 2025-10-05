@@ -40,14 +40,19 @@ Thumbs.db
 *.crt 
 *.pfx 
 *.jks 
-*.json 
+*.json
+!package.json
+!package-lock.json
+.firebaserc
+firebase.json 
  
 # ========================== 
-# Pastas de documentação
+# Pastas de documentação e scripts locais
 # ========================== 
 doc/ 
 docs/ 
- 
+scripts/ 
+
 # ========================== 
 # Arquivos auxiliares seus (.txt de testes) 
 # ========================== 

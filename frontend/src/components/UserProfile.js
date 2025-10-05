@@ -12,9 +12,10 @@ const UserProfile = ({
   onLogin 
 }) => {
   // ============================================================================
-  // 1. ESTADO PARA MENU DE USUÁRIO
+  // 1. ESTADOS PARA MENU DE USUÁRIO E LOGOUT
   // ============================================================================
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // ============================================================================
   // 2. SE ESTÁ CARREGANDO
@@ -61,15 +62,42 @@ const UserProfile = ({
           </div>
         </div>
 
-        {/* ✅ BLOCO 3.2: BOTÃO DE LOGOUT */}
+        {/* ✅ BLOCO 3.2: BOTÃO DE LOGOUT COM FEEDBACK VISUAL */}
         <button
-          onClick={onLogout}
-          className="w-full bg-purple-600 hover:bg-purple-500 text-white py-2 px-3 rounded-lg text-sm font-medium transition-colors flex items-center justify-center"
+          onClick={async () => {
+            if (isLoggingOut) return; // Evitar múltiplos cliques
+            setIsLoggingOut(true);
+            try {
+              await onLogout();
+              // ✅ CORREÇÃO: Resetar estado após logout bem-sucedido
+              setTimeout(() => setIsLoggingOut(false), 2000);
+            } catch (error) {
+              console.error('Erro no logout:', error);
+              setIsLoggingOut(false);
+            }
+          }}
+          disabled={isLoggingOut}
+          className={`w-full py-2 px-3 rounded-lg text-sm font-medium transition-colors flex items-center justify-center ${
+            isLoggingOut 
+              ? 'bg-purple-500 text-purple-200 cursor-not-allowed' 
+              : 'bg-purple-600 hover:bg-purple-500 text-white'
+          }`}
         >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-          </svg>
-          Sair
+          {isLoggingOut ? (
+            <>
+              <svg className="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Saindo...
+            </>
+          ) : (
+            <>
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Sair
+            </>
+          )}
         </button>
       </div>
     );

@@ -17,7 +17,8 @@ export async function middleware(req) {
     '/pedidos-entregues',
     '/todos-pedidos',
     '/admin',
-    '/gestao-entregadores'
+    '/gestao-entregadores',
+    '/perfil'  // ✅ CORREÇÃO: Adicionar perfil às rotas protegidas
   ];
   
   if (protectedRoutes.includes(pathname)) {
@@ -36,6 +37,7 @@ export const config = {
     '/pedidos-entregues', 
     '/todos-pedidos',
     '/admin',
-    '/gestao-entregadores'
+    '/gestao-entregadores',
+    '/perfil'  // ✅ CORREÇÃO: Adicionar perfil ao matcher
   ],
 };

@@ -67,10 +67,14 @@ export default function Perfil() {
       }
     }
     
-    // Redirecionamento apenas se não há usuário e não está carregando
-    if (!userLoading && !userProfile) {
-      console.log('🚪 PERFIL: Nenhum usuário encontrado, redirecionando para login');
-      router.push('/login');
+    // ✅ CORREÇÃO: Redirecionamento mais robusto - aguardar carregamento completo
+    if (!userLoading && !userProfile && !isRedirecting) {
+      console.log('🚪 PERFIL: Nenhum usuário encontrado após carregamento, redirecionando para login');
+      setIsRedirecting(true);
+      // Usar setTimeout para evitar problemas de estado
+      setTimeout(() => {
+        router.push('/login');
+      }, 100);
     } else if (userProfile && userRole) {
       console.log('✅ PERFIL: Usuário identificado', { 
         role: userRole, 
@@ -78,7 +82,7 @@ export default function Perfil() {
         timestamp: currentTimestamp 
       });
     }
-  }, []); // ✅ CORREÇÃO: Executar apenas uma vez para evitar loops infinitos
+  }, [userLoading, userProfile, userRole]); // ✅ CORREÇÃO: Remover isRedirecting das dependências para evitar loops
   
   // ============================================================================
   // 3. EFFECT: ATUALIZAR OS NOMES DAS LOJAS

@@ -142,12 +142,11 @@ export default function Login() {
         throw userError;
       }
 
-      // Determinar redirecionamento
-      let redirectPath = '/';
+      // ✅ CORREÇÃO: Todos os usuários logados vão para Pedidos Pendentes
+      let redirectPath = '/pedidos-pendentes';
 
       if (usuario.is_admin) {
-        redirectPath = '/admin';
-        if (isDev) console.log('👑 Usuário é ADMIN');
+        if (isDev) console.log('👑 Usuário é ADMIN - redirecionando para Pedidos Pendentes');
       } else {
         const { data: associacoes, error: assocError } = await supabase
           .from('loja_associada')
@@ -170,16 +169,13 @@ export default function Login() {
         const primeiraAssociacao = associacoes[0];
         switch (primeiraAssociacao.funcao) {
           case 'gerente':
-            redirectPath = '/todos-pedidos';
-            if (isDev) console.log('💼 Usuário é GERENTE');
+            if (isDev) console.log('💼 Usuário é GERENTE - redirecionando para Pedidos Pendentes');
             break;
           case 'entregador':
-            redirectPath = '/pedidos-pendentes';
-            if (isDev) console.log('🚚 Usuário é ENTREGADOR');
+            if (isDev) console.log('🚚 Usuário é ENTREGADOR - redirecionando para Pedidos Pendentes');
             break;
           default:
             console.warn('⚠️ Função não reconhecida:', primeiraAssociacao.funcao);
-            redirectPath = '/';
             break;
         }
       }
