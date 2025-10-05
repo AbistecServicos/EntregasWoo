@@ -58,3 +58,8 @@ scripts/
 # ========================== 
 *.txt 
 *.ps1
+
+# ========================== 
+# Documentos pessoais
+# ========================== 
+DocumentosPessoais/
