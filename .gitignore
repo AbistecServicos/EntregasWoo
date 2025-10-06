@@ -62,6 +62,17 @@ scripts/
 *.ps1
 
 # ========================== 
+# Arquivos de teste e desenvolvimento local
+# ========================== 
+*-test.js
+*-teste.js
+*teste-*.js
+*test-*.js
+deploy-*.js
+TelegramConfig.js
+teste-telegram.js
+
+# ========================== 
 # Documentos pessoais
 # ========================== 
 DocumentosPessoais/
