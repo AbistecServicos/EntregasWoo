@@ -238,7 +238,8 @@ export default function HomePage() {
               <ul>
                 <li>Email: comercial@abistec.com.br</li>
                 <li>WhatsApp: (21) 3272-7548</li>
-                <li>Site: <a href="https://pedidossimples.com.br">pedidossimples.com.br</a></li>
+                <li>Site 1: <a href="https://vendaswoo.com.br">vendaswoo.com.br</a></li>
+                <li>Site 2: <a href="https://entregaswoo.com.br">entregaswoo.com.br</a></li>
               </ul>
             </div>
           </div>
