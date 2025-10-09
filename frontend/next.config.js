@@ -22,6 +22,24 @@ module.exports = {
   },
   
   // ==========================================================================
+  // CONFIGURAÇÕES DE REDIRECIONAMENTOS
+  // ==========================================================================
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/login',
+        permanent: false,
+      },
+      {
+        source: '/vendaswoo',
+        destination: '/login',
+        permanent: false,
+      },
+    ];
+  },
+  
+  // ==========================================================================
   // CONFIGURAÇÕES DE HEADERS
   // ==========================================================================
   async headers() {

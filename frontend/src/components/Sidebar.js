@@ -123,13 +123,12 @@ useEffect(() => {
   // ============================================================================
   // MONTAGEM CONDICIONAL DOS ITENS (USA DADOS INSTANTÂNEOS)
   // ============================================================================
-  // ✅ CORREÇÃO: Quando logado, não mostrar páginas index e vendaswoo
+  // ✅ CORREÇÃO: Páginas públicas removidas - sistema apenas para usuários logados
   let menuItems = [];
 
-  // Se usuário não está logado, mostrar páginas públicas
-  if (!displayUser) {
-    menuItems = [homeItem, vendasWooItem];
-  } else {
+  // ✅ NOVO: Não mostrar mais páginas públicas (index e vendaswoo)
+  // Sistema agora é apenas para usuários autenticados
+  if (displayUser) {
     // Se usuário está logado, mostrar apenas páginas do sistema
     menuItems.push(perfilItem);
 
