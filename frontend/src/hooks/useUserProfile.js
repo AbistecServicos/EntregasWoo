@@ -64,7 +64,7 @@ export const useUserProfile = () => {
       // --------------------------------------------------------------------
       const { data: usuarioData, error: usuarioError } = await supabase
         .from('usuarios')
-        .select('uid, nome_completo, email, is_admin, telefone')
+        .select('uid, nome_completo, nome_usuario, email, is_admin, telefone, foto')
         .eq('uid', authUser.id)
         .single();
 

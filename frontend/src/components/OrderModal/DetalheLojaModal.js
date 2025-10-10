@@ -42,25 +42,44 @@ export default function DetalheLojaModal({ loja, isOpen, onClose, onUpdate }) {
 
       // Upload da nova logo se foi selecionada
       if (formData.loja_logo instanceof File) {
+        console.log('🔄 Iniciando upload de logo...');
+        console.log('📁 Arquivo:', formData.loja_logo.name, 'Tamanho:', formData.loja_logo.size);
+        console.log('📋 Tipo MIME:', formData.loja_logo.type);
+        console.log('📋 É File?', formData.loja_logo instanceof File);
+        
         const fileExt = formData.loja_logo.name.split('.').pop();
         const fileName = `logo_loja_${formData.id_loja}_${Date.now()}.${fileExt}`;
         const filePath = `logos/${fileName}`;
 
-        const { error: uploadError } = await supabase.storage
-          .from('box')
-          .upload(filePath, formData.loja_logo, { upsert: true });
+        console.log('📂 Caminho do arquivo:', filePath);
 
-        if (uploadError) throw uploadError;
+        // ✅ CORREÇÃO: Usar abordagem simples como no app antigo
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('box')
+          .upload(filePath, formData.loja_logo, { 
+            upsert: true 
+          });
+
+        if (uploadError) {
+          console.error('❌ Erro no upload:', uploadError);
+          throw uploadError;
+        }
+
+        console.log('✅ Upload concluído:', uploadData);
 
         const { data: { publicUrl } } = supabase.storage
           .from('box')
           .getPublicUrl(filePath);
         
+        console.log('🔗 URL pública gerada:', publicUrl);
         loja_logo_url = publicUrl;
       }
 
+      console.log('💾 Atualizando loja no banco...');
+      console.log('🔗 Logo URL:', loja_logo_url);
+
       // Atualizar a loja
-      const { error: updateError } = await supabase
+      const { data: updateData, error: updateError } = await supabase
         .from('lojas')
         .update({
           loja_nome: formData.loja_nome,
@@ -75,11 +94,17 @@ export default function DetalheLojaModal({ loja, isOpen, onClose, onUpdate }) {
         })
         .eq('id', loja.id);
 
-      if (updateError) throw updateError;
+      if (updateError) {
+        console.error('❌ Erro ao atualizar loja:', updateError);
+        throw updateError;
+      }
+
+      console.log('✅ Loja atualizada com sucesso:', updateData);
 
       onUpdate();
       onClose();
     } catch (err) {
+      console.error('❌ Erro geral:', err);
       setError('Erro ao atualizar loja: ' + err.message);
     } finally {
       setLoading(false);
@@ -97,10 +122,53 @@ export default function DetalheLojaModal({ loja, isOpen, onClose, onUpdate }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      console.log('📁 Arquivo selecionado:', file.name, 'Tipo:', file.type);
       setFormData(prev => ({
         ...prev,
         loja_logo: file
       }));
+    }
+  };
+
+  // ✅ NOVO: Função para deletar logo atual
+  const handleDeleteLogo = async () => {
+    if (!loja?.loja_logo) return;
+    
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Extrair caminho do arquivo da URL
+      const url = new URL(loja.loja_logo);
+      const pathParts = url.pathname.split('/');
+      const filePath = pathParts.slice(4).join('/'); // Remove '/storage/v1/object/public/box/'
+
+      // Deletar arquivo do storage
+      const { error: deleteError } = await supabase.storage
+        .from('box')
+        .remove([filePath]);
+
+      if (deleteError) throw deleteError;
+
+      // Atualizar loja no banco (remover URL da logo)
+      const { error: updateError } = await supabase
+        .from('lojas')
+        .update({
+          loja_logo: null,
+          data_atualizacao: new Date().toISOString()
+        })
+        .eq('id', loja.id);
+
+      if (updateError) throw updateError;
+
+      alert('Logo removida com sucesso!');
+      onUpdate();
+      onClose();
+    } catch (err) {
+      console.error('❌ Erro ao deletar logo:', err);
+      setError('Erro ao remover logo: ' + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -217,13 +285,41 @@ export default function DetalheLojaModal({ loja, isOpen, onClose, onUpdate }) {
                 onChange={handleFileChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded"
               />
-              {loja?.loja_logo && (
+              
+              {/* Preview da nova imagem selecionada */}
+              {formData.loja_logo instanceof File && (
                 <div className="mt-2">
-                  <p className="text-sm text-gray-600">Logo atual:</p>
+                  <p className="text-sm text-gray-600">Nova imagem selecionada:</p>
                   <img 
-                    src={loja.loja_logo} 
+                    src={URL.createObjectURL(formData.loja_logo)}
+                    alt="Preview da nova imagem"
+                    className="h-16 w-auto object-contain border rounded mt-1"
+                  />
+                </div>
+              )}
+              
+              {/* Logo atual (se não houver nova imagem selecionada) */}
+              {loja?.loja_logo && !(formData.loja_logo instanceof File) && (
+                <div className="mt-2">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-sm text-gray-600">Logo atual:</p>
+                    <button
+                      type="button"
+                      onClick={handleDeleteLogo}
+                      disabled={loading}
+                      className="text-red-600 hover:text-red-800 text-sm font-medium"
+                    >
+                      🗑️ Remover Logo
+                    </button>
+                  </div>
+                  <img 
+                    src={loja.loja_logo}
                     alt={`Logo ${loja.loja_nome}`}
                     className="h-16 w-auto object-contain border rounded mt-1"
+                    onError={(e) => {
+                      console.log('❌ Erro ao carregar imagem atual:', loja.loja_logo);
+                      e.target.style.display = 'none';
+                    }}
                   />
                 </div>
               )}

@@ -22,12 +22,8 @@ const supabaseOptions = {
     persistSession: true,
     detectSessionInPersist: true,
   },
-  global: {
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-  },
+  // ✅ CORREÇÃO: Remover headers globais que causam mimetype incorreto em uploads
+  // As headers devem ser configuradas por request, não globalmente
 };
 
 // Cliente principal

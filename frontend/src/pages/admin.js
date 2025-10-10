@@ -61,6 +61,14 @@ export default function Admin() {
       if (error) throw error;
       
       console.log('✅ Lojas carregadas:', data?.length || 0);
+      
+      // ✅ Log das URLs dos logos para debug
+      if (data && data.length > 0) {
+        data.forEach(loja => {
+          console.log(`📷 ${loja.loja_nome} - Logo:`, loja.loja_logo);
+        });
+      }
+      
       setLojas(data || []);
     } catch (err) {
       console.error('❌ Erro ao carregar lojas:', err);
